@@ -16,7 +16,7 @@ const createDocument = async (req, res, next) => {
     // const formPdfBytes = ... // The bytes of the PDF form you want to fill in
 
     //the file name should be in req.body.fileName)
-    const templatePath = getFilePath(data.fileName); //storing a template
+    const templatePath = getFilePath(data.file_name); //storing a template
     const fieldNamesInTemplate = await getFormFields(templatePath);
     const fieldsNotFound = [];
     const formPdfBytes = await fs.promises.readFile(templatePath);
@@ -67,7 +67,7 @@ const createDocument = async (req, res, next) => {
     }
     res.status(201).json({ message:"Created without problems", result: result });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({error:error})
   }
 };
 

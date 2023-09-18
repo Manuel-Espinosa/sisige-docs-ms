@@ -1,6 +1,6 @@
 import express from 'express';
-import { createDocument } from '../functions/documents/createDocument.js';
-import { getDocument } from '../functions/documents/getDocument.js';
+import { createDocument } from '../controllers/documents/createDocument.js';
+import { getDocument } from '../controllers/documents/getDocument.js';
 
 const DocumentRouter = express.Router();
 
