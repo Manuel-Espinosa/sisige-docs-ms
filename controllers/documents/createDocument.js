@@ -30,7 +30,7 @@ const createDocument = async (req, res, next) => {
     for (const fieldName of fieldNamesInTemplate) {
       // Check if the field name exists in data.fields
       if (data.fields.hasOwnProperty(fieldName)) {
-        // Get the value for the current field
+        // Get the value for the current field 
         const value = data.fields[fieldName];
 
         // Get the corresponding PDF text field
@@ -39,6 +39,7 @@ const createDocument = async (req, res, next) => {
         // Check if the text field exists in the PDF form
         if (textField) {
           // Set the text of the PDF text field with the value
+          textField.setFontSize(9)
           textField.setText(value.toString()); // Ensure 'value' is a string
         } else {
           // Print a warning if the field is not found in the PDF form
@@ -55,9 +56,9 @@ const createDocument = async (req, res, next) => {
     const pdfBuffer = Buffer.from(pdfBson.buffer);
     //creaaating and instance of PDF Schema to assing its  properties
     const createdDocument = new PDF({
-      name: req.body.title,
-      id: req.body.id,
-      owner: req.body.owner,
+      name: data.title,
+      id: data.id,
+      owner: data.owner,
       pdf: pdfBuffer,
     });
     //saving the pdf document
