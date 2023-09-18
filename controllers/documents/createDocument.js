@@ -1,45 +1,51 @@
 import { PDFDocument } from "pdf-lib";
 import { Binary } from "mongodb";
 import fs from "fs";
-import mongoose from "mongoose";
 import { PDF } from "../../schemas/document.js";
 import { Buffer } from "buffer";
-
+import { getFormFields } from "../../helpers/getFormFields.js";
+import { getFilePath } from "../../helpers/getFilePath.js";
 
 const createDocument = async (req, res, next) => {
   try {
-
     const data = req.body;
     // These should be Uint8Arrays or ArrayBuffers
     // This data can be obtained in a number of different ways
     // If your running in a Node environment, you could use fs.readFile()
     // In the browser, you could make a fetch() call and use res.arrayBuffer()
     // const formPdfBytes = ... // The bytes of the PDF form you want to fill in
-    const filePath = "./templates/instrumentacion.pdf";//storing a template
-    const formPdfBytes = await fs.promises.readFile(filePath);
+
+    //the file name should be in req.body.fileName)
+    const templatePath = getFilePath(data.fileName); //storing a template
+    const fieldNamesInTemplate = await getFormFields(templatePath);
+    const fieldsNotFound = [];
+    const formPdfBytes = await fs.promises.readFile(templatePath);
     // Load the PDF form
     const pdfDoc = await PDFDocument.load(formPdfBytes);
 
     // Get the form containing all the fields
     const form = pdfDoc.getForm();
 
-    // Fill in the form fields
-    /**
-     * this  should be a getFieldsNames() function that takes  the template and return an array
-     * with its field names
-     * 
-     *then we need a function that takes the body request to pair it keys
-     with the field names obtained by getFieldsNames() and set the text to  each field
-     */
-    const nameField = form.getTextField("subject_name");
-    nameField.setText(data.subject_name);
+    // Iterate through field names in the template
+    for (const fieldName of fieldNamesInTemplate) {
+      // Check if the field name exists in data.fields
+      if (data.fields.hasOwnProperty(fieldName)) {
+        // Get the value for the current field
+        const value = data.fields[fieldName];
 
-    const lastNameField = form.getTextField("subject_id");
-    lastNameField.setText(data.subject_id);
+        // Get the corresponding PDF text field
+        const textField = form.getTextField(fieldName);
 
-    const addressField = form.getTextField("subject_plan");
-    addressField.setText(data.subject_plan);
-
+        // Check if the text field exists in the PDF form
+        if (textField) {
+          // Set the text of the PDF text field with the value
+          textField.setText(value.toString()); // Ensure 'value' is a string
+        } else {
+          // Print a warning if the field is not found in the PDF form
+          fieldsNotFound.push(fieldName);
+        }
+      }
+    }
 
     // Serialize the PDFDocument to bytes (a Uint8Array)
     const pdfBytes = await pdfDoc.save();
@@ -56,10 +62,13 @@ const createDocument = async (req, res, next) => {
     });
     //saving the pdf document
     const result = await createdDocument.save();
-    res.json(result);
+    if (fieldsNotFound.length > 0) {
+      res.status(201).json({ message:"Created with problems",problems: fieldsNotFound, result: result });
+    }
+    res.status(201).json({ message:"Created without problems", result: result });
   } catch (error) {
     console.log(error);
-  } 
+  }
 };
 
 export { createDocument };
