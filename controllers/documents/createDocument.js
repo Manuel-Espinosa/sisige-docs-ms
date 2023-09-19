@@ -30,16 +30,15 @@ const createDocument = async (req, res, next) => {
     for (const fieldName of fieldNamesInTemplate) {
       // Check if the field name exists in data.fields
       if (data.fields.hasOwnProperty(fieldName)) {
-        // Get the value for the current field 
+        // Get the value for the current field
         const value = data.fields[fieldName];
 
         // Get the corresponding PDF text field
         const textField = form.getTextField(fieldName);
-
         // Check if the text field exists in the PDF form
         if (textField) {
           // Set the text of the PDF text field with the value
-          textField.setFontSize(9)
+          textField.setFontSize(9);
           textField.setText(value.toString()); // Ensure 'value' is a string
         } else {
           // Print a warning if the field is not found in the PDF form
@@ -64,11 +63,19 @@ const createDocument = async (req, res, next) => {
     //saving the pdf document
     const result = await createdDocument.save();
     if (fieldsNotFound.length > 0) {
-      res.status(201).json({ message:"Created with problems",problems: fieldsNotFound, result: result });
+      res
+        .status(201)
+        .json({
+          message: "Created with problems",
+          problems: fieldsNotFound,
+          result: result,
+        });
     }
-    res.status(201).json({ message:"Created without problems", result: result });
+    res
+      .status(201)
+      .json({ message: "Created without problems", result: result });
   } catch (error) {
-    res.status(500).json({error:error})
+    res.status(500).json({ error: error });
   }
 };
 

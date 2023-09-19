@@ -1,6 +1,5 @@
 import fs from "fs";
-import mongoose from "mongoose";
-import { PDF } from "../../schemas/document.js";
+import { findDocumentById } from "../../helpers/findDocument.js";
 
 
 const getDocument = async (req, res, next) => {
@@ -9,7 +8,7 @@ const getDocument = async (req, res, next) => {
     //getting document from its id 
     const id = req.params.id;
     console.log('searching for document: ', id)
-    const pdf = await PDF.find({ id: id }).exec();
+    const pdf = await findDocumentById(id)
     const pdfBuffer = pdf[0].pdf;
     fs.writeFile("./templates/converted_i.pdf", pdfBuffer, function (err) {
       if (err) {
@@ -19,7 +18,7 @@ const getDocument = async (req, res, next) => {
       }
     });
     res.json(pdfBuffer);
-  } catch (error) {
+  } catch (error) { 
     console.log(error);
   } 
 };
