@@ -16,7 +16,7 @@ const createDocument = async (req, res, next) => {
     // const formPdfBytes = ... // The bytes of the PDF form you want to fill in
 
     //the file name should be in req.body.fileName)
-    const templatePath = getFilePath(data.file_name); //storing a template
+    const templatePath = getFilePath(data.file_name);
     const fieldNamesInTemplate = await getFormFields(templatePath);
     const fieldsNotFound = [];
     const formPdfBytes = await fs.promises.readFile(templatePath);
