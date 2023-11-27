@@ -2,6 +2,7 @@ export const getFilePath = (fileName) => {
     // Define a mapping of file names to file paths
     const fileMappings = {
       "SGI_G3_3.1_INSTRUM_DIDAC_PLANES_2015_2022": "./templates/SGI_G3_3.1_INSTRUM_DIDAC_PLANES_2015_2022.pdf",
+      "ACA-0907-I": "./templates/materias/1/ACA-0907/ACA-0907-I.pdf"
       // Add more file mappings as needed
     };
   
