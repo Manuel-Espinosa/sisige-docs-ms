@@ -51,14 +51,18 @@ const getTemplate = async (req, res, next) => {
     const data = req.body;
     const templateRelativePath = getFilePath(data.file_name);
 
-    const templateAbsolutePath = path.resolve(__dirname, '..','..', templateRelativePath);
+    const templateAbsolutePath = path.resolve(__dirname, '..', '..', templateRelativePath);
 
+    // Read the PDF file from the file system
     const fileContent = fs.readFileSync(templateAbsolutePath);
 
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename=${path.basename(templateAbsolutePath)}`);
+    // Convert the file content to a Base64 encoded string
+    const base64EncodedPDF = fileContent.toString('base64');
 
-    res.send(fileContent);
+    // Set the correct headers for Base64 encoded content
+
+    // Send the Base64 encoded content
+    res.status(200).json({"template":base64EncodedPDF});
   } catch (error) {
     next(error);
   }
