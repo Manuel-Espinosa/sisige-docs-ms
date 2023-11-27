@@ -3,6 +3,8 @@ import path from "path";
 import { fileWritter } from "../../helpers/fileWritter.js";
 import { findDocumentById } from "../../helpers/findDocument.js";
 import { fileShredder } from "../../helpers/fileShredder.js";
+import { getFilePath } from "../../helpers/getFilePath.js";
+import fs from "fs"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -44,4 +46,22 @@ const getDocument = async (req, res, next) => {
   }
 };
 
-export { getDocument };
+const getTemplate = async (req, res, next) => {
+  try {
+    const data = req.body;
+    const templateRelativePath = getFilePath(data.file_name);
+
+    const templateAbsolutePath = path.resolve(__dirname, '..','..', templateRelativePath);
+
+    const fileContent = fs.readFileSync(templateAbsolutePath);
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=${path.basename(templateAbsolutePath)}`);
+
+    res.send(fileContent);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { getDocument, getTemplate };
