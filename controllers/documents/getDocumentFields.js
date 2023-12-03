@@ -3,10 +3,9 @@ import {getFilePath} from "../../helpers/getFilePath.js"
 
 export const getDocumentFields = async (req, res, next) => {
   try {
-    const data = req.body;
-    console.log(data)
+    const document = req.params.document;
 
-    const filePath = getFilePath(data.fileName)
+    const filePath = getFilePath(document)
 
     const formFields = await getFormFields(filePath);
 

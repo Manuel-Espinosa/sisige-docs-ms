@@ -8,7 +8,7 @@ const DocumentRouter = express.Router();
 DocumentRouter.post('/documents/create', createDocument);
 DocumentRouter.get('/documents/:id', getDocument);
 DocumentRouter.post('/documents/template', getTemplate);
-DocumentRouter.get('/document/fields', getDocumentFields);
+DocumentRouter.get('/document/fields/:document', getDocumentFields);
 
 
 export default DocumentRouter; 

@@ -252,7 +252,9 @@ function getRandomValue() {
 }
 
 fields.forEach(field => {
-    doc[field] = getRandomValue();
+   // doc[field] = getRandomValue();
+    doc[field] = field;
+
 });
 
 console.log(JSON.stringify(doc));
