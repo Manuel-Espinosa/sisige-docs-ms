@@ -1,81 +1,106 @@
-import { PDFDocument } from "pdf-lib";
+import { PDFDocument, PDFTextField, PDFButton } from "pdf-lib";
 import { Binary } from "mongodb";
 import fs from "fs";
 import { PDF } from "../../schemas/document.js";
 import { Buffer } from "buffer";
 import { getFormFields } from "../../helpers/getFormFields.js";
 import { getFilePath } from "../../helpers/getFilePath.js";
+import ensureDefaultAppearance from "../../helpers/ensureDefaultAppearance.js";
 
 const createDocument = async (req, res, next) => {
   try {
     const data = req.body;
-    // These should be Uint8Arrays or ArrayBuffers
-    // This data can be obtained in a number of different ways
-    // If your running in a Node environment, you could use fs.readFile()
-    // In the browser, you could make a fetch() call and use res.arrayBuffer()
-    // const formPdfBytes = ... // The bytes of the PDF form you want to fill in
+    console.log("Request received with body: ", JSON.stringify(data));
 
-    //the file name should be in req.body.fileName)
     const templatePath = getFilePath(data.file_name);
+    console.log("Template path: ", templatePath);
+
+    if (!fs.existsSync(templatePath)) {
+      console.log(`Template file not found at: ${templatePath}`);
+      throw new Error("Template file not found");
+    }
+
     const fieldNamesInTemplate = await getFormFields(templatePath);
-    const fieldsNotFound = [];
+    console.log("Fields in template: ", JSON.stringify(fieldNamesInTemplate));
+
     const formPdfBytes = await fs.promises.readFile(templatePath);
-    // Load the PDF form
+    console.log("Form PDF bytes processed.");
+
     const pdfDoc = await PDFDocument.load(formPdfBytes);
+    if (!pdfDoc) {
+      console.log("Failed to load PDF document");
+      throw new Error("Failed to load PDF document");
+    }
+    console.log("PDF document loaded successfully.");
 
-    // Get the form containing all the fields
     const form = pdfDoc.getForm();
+    if (!form) {
+      console.log("No form found in PDF document");
+      throw new Error("No form found in PDF document");
+    }
+    console.log("PDF form retrieved.");
 
-    // Iterate through field names in the template
+    const fieldsNotFound = [];
+
     for (const fieldName of fieldNamesInTemplate) {
-      // Check if the field name exists in data.fields
       if (data.fields.hasOwnProperty(fieldName)) {
-        // Get the value for the current field
         const value = data.fields[fieldName];
 
-        // Get the corresponding PDF text field
-        const textField = form.getTextField(fieldName);
-        // Check if the text field exists in the PDF form
-        if (textField) {
-          // Set the text of the PDF text field with the value
-          textField.setFontSize(9);
-          textField.setText(value.toString()); // Ensure 'value' is a string
+        // Ensure the default appearance is set for the field
+        await ensureDefaultAppearance(pdfDoc, fieldName);
+
+        const field = form.getField(fieldName);
+        if (field) {
+          if (field instanceof PDFTextField) {
+            console.log(`Setting text field ${fieldName} with value ${value}`);
+            field.setFontSize(9);
+            field.setText(value.toString());
+          } else {
+            // Log that a non-text field was found and will be ignored
+            console.log(`Non-text field found and ignored: ${fieldName}`);
+          }
         } else {
-          // Print a warning if the field is not found in the PDF form
+          console.log(`Field not found in PDF: ${fieldName}`);
           fieldsNotFound.push(fieldName);
         }
       }
     }
 
-    // Serialize the PDFDocument to bytes (a Uint8Array)
+    console.log("Saving PDF document...");
     const pdfBytes = await pdfDoc.save();
-    //converting the pdf a binary
+    console.log("PDF document saved.");
+
     const pdfBson = new Binary(pdfBytes);
-    //buffering the "binarized" pdf
     const pdfBuffer = Buffer.from(pdfBson.buffer);
-    //creaaating and instance of PDF Schema to assing its  properties
+
     const createdDocument = new PDF({
       name: data.title,
       id: data.id,
       owner: data.owner,
+      subject:data.subject,
+      group:data.group,
       pdf: pdfBuffer,
     });
-    //saving the pdf document
+
+    console.log("Saving document to database...");
     const result = await createdDocument.save();
+    console.log("Document saved to database.");
+
     if (fieldsNotFound.length > 0) {
-      res
-        .status(201)
-        .json({
-          message: "Created with problems",
-          problems: fieldsNotFound,
-          result: result,
-        });
+      console.log("Created with missing fields: ", fieldsNotFound);
+      return res.status(201).json({
+        message: "Created with problems",
+        problems: fieldsNotFound,
+        result: result,
+      });
     }
+
     res
       .status(201)
       .json({ message: "Created without problems", result: result });
   } catch (error) {
-    res.status(500).json({ error: error });
+    console.log("Error occurred: ", error);
+    res.status(500).json({ error: error.message });
   }
 };
 
