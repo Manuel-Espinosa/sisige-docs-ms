@@ -54,6 +54,7 @@ const createDocument = async (req, res, next) => {
           if (field instanceof PDFTextField) {
             console.log(`Setting text field ${fieldName} with value ${value}`);
             field.setFontSize(9);
+            field.enableMultiline();
             field.setText(value.toString());
           } else {
             // Log that a non-text field was found and will be ignored
