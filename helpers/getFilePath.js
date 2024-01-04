@@ -14,6 +14,7 @@ export const getFilePath = (fileName) => {
 
     /**Blueprints Instrumentaciones primer semestre */
     "ACA-0907-I-B": "./templates/materias/1/ACA-0907/ACA-0907-I-B.json",
+    "ACC-0906-I-B": "./templates/materias/1/ACC-0906/ACC-0906-I-B.json",
 
     // Add more file mappings as needed
   };

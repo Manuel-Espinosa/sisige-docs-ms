@@ -1,7 +1,7 @@
 {
-    "name": "Taller de Ética",
-    "templateID": "ACA-0907-I",
-    "key": "ACA-0907",
+    "name": "Fundamentos de Investigación",
+    "templateID": "ACC-0906-I",
+    "key": "ACC-0906",
     "tableTemplate": {
         "activityTable": {
             "type": "table",
