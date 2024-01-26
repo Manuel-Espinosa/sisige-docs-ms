@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const PORT = process.env.PORT;
+const DOCKER_PORT = process.env.DOCKER_PORT;
 const app = express();
 app.use(cors());
 app.use(helmet());
@@ -18,8 +18,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 connectionPool.once("open", () => {
   app.use("/api", DocumentRouter);
 
-  app.listen(PORT, () => {
-    console.log("Server Running on port " + PORT);
+  app.listen(DOCKER_PORT, () => {
+    console.log("Server Running on port " + DOCKER_PORT);
   });
 });
 

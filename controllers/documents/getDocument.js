@@ -16,20 +16,17 @@ const getDocument = async (req, res, next) => {
     const id = req.params.id;
     console.log("Searching for document:", id);
     const pdf = await findDocumentById(id);
+
+    if (!pdf || pdf.length === 0) {
+      return res.status(404).json({ error: `Document with ID ${id} not found.` });
+    }
+
     const pdfBuffer = pdf[0].pdf;
-
-    const filePath = path.join(
-      __dirname,
-      `../../templates/${id}.pdf`
-    );
-
+    const filePath = path.join(__dirname, `../../templates/${id}.pdf`);
     await fileWritter(filePath, pdfBuffer);
 
     res.setHeader("Content-Type", "application/pdf");
-    res.setHeader(
-      "Content-Disposition",
-      `attachment; filename=${id}.pdf`
-    );
+    res.setHeader("Content-Disposition", `attachment; filename=${id}.pdf`);
 
     const readStream = fs.createReadStream(filePath);
     pipeline(readStream, res, err => {
@@ -47,6 +44,7 @@ const getDocument = async (req, res, next) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 
 
 

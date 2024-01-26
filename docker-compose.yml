@@ -1,0 +1,21 @@
+version: '3'
+services:
+  docsms:
+    container_name: docsms
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT}:${DOCKER_PORT}"
+    environment:
+      - MONGO_CONNECTION=${MONGO_CONNECTION}
+      - SALTROUNDS=${SALTROUNDS}
+      - JWT_SECRET=${JWT_SECRET}
+    volumes:
+      - .:/app
+    networks:
+    - backend
+networks:
+  backend:
+    external: true
+    name: ${DOCKER_NETWORK}

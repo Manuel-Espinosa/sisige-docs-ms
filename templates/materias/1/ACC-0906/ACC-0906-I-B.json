@@ -99,7 +99,7 @@
                 }
             }
         },
-        "sourceTable":{
+        "sourceTable": {
             "columns": 1,
             "rows": 1,
             "headers": [
@@ -112,18 +112,26 @@
             "activityTable": {
                 "template": "activityTable",
                 "staticData": {
-                    "competence":1,
-                    "description":"Aplicar los principios generales y objetivos de la administración y su proceso en las estructuras y funciones de las organizaciones.",
+                    "competence": 1,
+                    "description": "Identifica conceptos básicos de fundamentos de investigación como proceso de construcción social.",
                     "topics": [
-                        "1.1. Generalidades sobre ética.",
-                        "1.1.1 La ética, su objeto de estudio y su sentido sociocultural.",
-                        "1.1.2 El juicio moral y el juicio ético.",
-                        "1.1.3 Valores éticos fundamentales: verdad, responsabilidad, justicia y libertad",
-                        "1.1.4 Derechos Humanos.",
-                        "1.2. Significado y sentido del comportamiento ético.",
-                        "1.2.1 En el ámbito personal y social.",
-                        "1.2.2 En el ámbito académico.",
-                        "1.1.3 En el ejercicio de la ciudadanía."
+                        "Conceptos básicos de fundamentos de investigación como proceso de construcción social.",
+                        "1.1. Relación hombre-conocimiento-realidad",
+                        "1.1.1. Concepto de realidad y conocimiento",
+                        "1.1.2. Proceso de adquisición del conocimiento",
+                        "1.1.3. Tipos de conocimiento",
+                        "1.2. Proceso de construcción de la ciencia",
+                        "1.2.1. Definición y características de la ciencia",
+                        "1.2.2. Proceso de construcción",
+                        "1.3. Clasificación de las ciencias",
+                        "1.4. Métodos",
+                        "1.4.1. Definición de método y técnica",
+                        "1.4.2. Tipos de métodos; No científicos lógicos y científicos",
+                        "1.4.3. Características, etapas y reglas del método científico",
+                        "1.5. La investigación y el investigador",
+                        "1.5.1. Definición y características de la investigación",
+                        "1.5.2. Características del investigador",
+                        "1.5.3. Obstáculos de la investigación"
                     ],
                     "location": {
                         "type": "singlerow",
@@ -144,19 +152,16 @@
         },
         "2": {
             "activityTable": {
-               "template": "activityTable",
+                "template": "activityTable",
                 "staticData": {
-                    "competence":2,
-                    "description":"Identificar el medio interno y externo de las empresas. Conocer la cultura corporativa y el papel de la administración en la globalización.",    
+                    "competence": 2,
+                    "description": "Aplica herramientas formales de comunicación oral y escrita en la investigación documental, en la elaboración de documentos académicos.",
                     "topics": [
-                        "2.1. Implicaciones éticas de la investigación científica.",
-                        "2.1.1 Límites éticos de la investigación.",
-                        "2.1.2 Decisiones éticas en la investigación científica.",
-                        "2.1.3 Comportamiento ético del investigador.",
-                        "2.1.4 Motivaciones del investigador.",
-                        "2.2 Implicaciones éticas en el desarrollo y aplicación de la tecnología.",
-                        "2.2.1 Conceptos y problemas de la tecnoética y bioética.",
-                        "2.2.2 Comportamiento ético del tecnólogo."
+                        "Herramientas de la comunicación oral y escrita en la investigación documental",
+                        "2.1. Distinción entre comunicación escrita y oral",
+                        "2.2. Técnicas de redacción: coherencia, Concordancia",
+                        "2.3. Normas y reglas ortográficas y de puntuación",
+                        "2.4. Tipología de textos académicos como herramientas del conocimiento científico (monografía, ensayo, reseña, reporte, tesis, protocolo)"
                     ],
                     "location": {
                         "type": "singlerow",
@@ -179,15 +184,13 @@
             "activityTable": {
                 "template": "activityTable",
                 "staticData": {
-                    "competence":3,
-                    "description":"Identificar y aplicar los pasos del proceso de toma de decisiones.",    
+                    "competence": 3,
+                    "description": "Analiza el desarrollo de su profesión, para conocer los aspectos sobresalientes en los ámbitos local, nacional e internacional empleando herramientas de investigación científica.",
                     "topics": [
-                        "3.1. Consideraciones generales de la ética profesional",
-                        "3.1.1 Dimensiones, deberes e implicaciones de la ética profesional",
-                        "3.1.2 El profesionista y su ética en el ejercicio del liderazgo",
-                        "3.1.3 Dilemas éticos profesionales",
-                        "3.2 Códigos de ética profesionales",
-                        "3.2.1 Contenido, sentido e implicaciones de los códigos de ética profesionales."
+                        "Estudio del desarrollo de su profesión y su estado actual",
+                        "3.1. Historia, desarrollo y estado actual de la Profesión",
+                        "3.2. Los ámbitos del desarrollo de la profesión en el contexto social",
+                        "3.3. Las prácticas predominantes y emergentes de la profesión en el contexto local, nacional e internacional"
                     ],
                     "location": {
                         "type": "singlerow",
@@ -210,19 +213,24 @@
             "activityTable": {
                 "template": "activityTable",
                 "staticData": {
-                    "competence":4,
-                    "description":"Identificar la importancia de la planeación y la estrategia. Tener habilidad para realizar análisis FODA.",  
+                    "competence": 4,
+                    "description": "Aplica métodos y técnicas de investigación documental, de acuerdo con parámetros previamente establecidos.",
                     "topics": [
-                        "4.1. Proceder ético en las instituciones y organizaciones.",
-                        "4.1.1 Código de ética de las instituciones y organizaciones.",
-                        "4.1.2 Casos concretos del proceder ético en las instituciones y organizaciones.",
-                        "4.2 La Responsabilidad social de las Instituciones y organizaciones.",
-                        "4.2.1 Desarrollo del concepto de Responsabilidad social.",
-                        "4.2.2 Contexto actual de la responsabilidad social.",
-                        "4.3 Derechos humanos laborales.",
-                        "4.3.1 Conceptos generales.",
-                        "4.3.2 Observancia de los derechos humanos laborales."
-                    ],
+                        "Proceso de elaboración de una investigación documental",
+                        "4.1. Fuentes de investigación documental",
+                        "4.2. Instrumentos de Investigación documental",
+                        "4.3. Estructura de la investigación documental",
+                        "4.3.1. Elección y delimitación del tema",
+                        "4.3.2. Objetivos",
+                        "4.3.3. Localización, selección y acopio de información de diferentes fuentes",
+                        "4.3.4. Diseño del esquema de trabajo (temario tentativo)",
+                        "4.3.5. Sistematización de información en los diversos tipos de fichas",
+                        "4.3.6. Organización del fichero",
+                        "4.3.7. Construcción lógica del aparato crítico (Uso de fuentes referenciales utilizadas como fundamento, citas textuales)",
+                        "4.3.8. Elaboración del informe en borrador",
+                        "4.3.9. Correcciones",
+                        "4.4. Presentación del informe"
+                      ],
                     "location": {
                         "type": "singlerow",
                         "column": 1,
@@ -242,7 +250,7 @@
         },
         "5": {
             "sourceTable": {
-                "template":"sourceTable",
+                "template": "sourceTable",
                 "formFields": []
             }
         },
